@@ -1,0 +1,40 @@
+//THIS FILE SUCCESSFULLY DOWNLOADS A FILE VIA JAVASCRIPT WITH NO CLICK REQUIRED BY USER
+//THEY WILL HAVE TO OPEN THE FILE IN DOWNLOADS.
+//TESTED 11/3/24 AND WORKS
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Download Example</title>
+</head>
+<body>
+    <script>
+        // Automatically download the image when the page loads
+        fetch('https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg')
+            .then(response => response.blob())
+            .then(blob => {
+                // Create a new URL for the blob
+                const url = window.URL.createObjectURL(blob);
+
+                // Create a new anchor element
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'NOCLICKCAT.jpeg'; // Suggested filename
+
+                // Append the link to the document body
+                document.body.appendChild(link);
+
+                // Simulate a click to start the download
+                link.click();
+
+                // Clean up by removing the link and revoking the object URL
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(err => console.error('Download failed:', err));
+    </script>
+</body>
+</html>
